@@ -105,3 +105,111 @@ This code defines the vector "Color" and the float "v" (they are set to 0). Then
     }
 
 Quality can be changed to any value that suits your purpose. For smaller textures, use smaller numbers and for larger textures, use larger numbers.
+
+&nbsp;
+
+<h1 align="center">Part Two</h1>
+
+&nbsp;
+
+<h3 align="center">Uniforms</h3>
+
+Uniforms are for getting values from outside of the shader,  into the shader. Uniforms have many uses. One use is to take the coordinates of the mouse for example. Uniforms can be vectors, floats, float arrays, integers and integer arrays. Setting up uniforms is simple you just put "uniform" before your variables. Like this:
+
+    uniform vec2 pos;
+
+We will add that code to our blur shader from the last tutorial. Put the code under the varying vectors. We will use these coordinates to tell where to center the radial blur.
+We can use this code for the position:
+
+    varying vec2 v_vTexcoord;
+    varying vec4 v_vColour;
+    uniform vec2 pos;//x,y
+    const int Quality = 16;
+
+    void main()
+    {
+        vec4 Color;
+        float v;
+        for( float i=0.0;i<1.0;i+=1.0/float(Quality) )
+        {
+            v = 0.9+i*0.1;//convert "i" to the 0.9 to 1 range
+            Color += texture2D( gm_BaseTexture, v_vTexcoord*v+(pos)*(1.0-v));
+        }
+        Color /= float(Quality);
+        gl_FragColor =  Color *  v_vColour;
+    }
+
+This code is just like the last one except with the position uniform is instead of 0.5. Now in order to run this code, we must add the uniforms in GameMaker.
+Uniforms in Gamemaker
+To set these variables in GameMaker, you must get the uniform id.
+In the Create event of the control object, put this code:
+
+    upos = shader_get_uniform(shader,"pos");
+
+That code sets variable "upos" to the id for the uniform "pos" from "shader" (which is the name of our shader). Then, under "shader_set(shader)" add "shader_set_uniform_f(shader,upos)".
+"shader_set_uniform_f()" is for floats or vectors. There are types for float arrays, integers, integer arrays, matrices, and matrix arrays, but for now we'll stick with floats.
+The whole code should look similar to this:
+
+    shader_set(shader)
+    shader_set_uniform_f(upos,mouse_x/room_width,mouse_y/room_height)
+    draw_self()//any draw code should work
+    shader_reset()
+
+What that code does, is it applies the shader, sets the uniform pos in the shader to the mouse coordinates (the coordinates are shrunk to a 0 to 1 range), then draws the sprite with the shader applied. When we run the game we get this result:
+Picture
+This is the result when the mouse is at the bottom center. Moving the mouse works perfectly.
+motion blur
+Next we'll make a motion blur. We will use a loop to get 16 pixels in line and average then to get the blur. Doing this in code is rather simple with the knowledge you have gained so far.
+Here is my code:
+
+    varying vec2 v_vTexcoord;
+    varying vec4 v_vColour;
+    uniform vec2 pos;//x,y
+    const int Quality = 16;
+    
+    void main()
+    {
+        vec4 Color;
+        for( float i=0.0;i<1.0;i+=1.0/float(Quality) )
+        {
+            Color += texture2D( gm_BaseTexture, v_vTexcoord+(0.5-pos)*i);
+        }
+        Color /= float(Quality);
+        gl_FragColor =  Color *  v_vColour;
+    }
+
+Now what this does is it loops through a number times equal to quality setting "i" from 0 to 1 then it gets the position in a line based off of "pos". Here is a screenshot of the result: 
+Picture
+And there you have a working motion blur shader! It takes in position between 0 and 1.
+And finally lets make the most used blur shader. Lets make a gaussian blur shader.
+GAUSSIAN blur
+This is done just like the motion blur shader, but in all directions. Since you can put a for statement inside another for statement we will be one loop to loop through all the directions and the other will loop through magnitudes. That means we'll need another Quality constant. We will call that one Directions. We'll also add a constant float called "Pi" and set it to "6.28318530718" (pi times 2) and change "pos" to "size" and make it a 3D vector (vec3). We'll use "size" for the width, height and radius where width and height are the textures height and width. Now add another loop with a float called "d" and it's range will be from 0.0 to "Pi". Here's how the code should look:
+
+    varying vec2 v_vTexcoord;
+    varying vec4 v_vColour;
+    uniform vec3 size;//width,height,radius
+    
+    const int Quality = 8;
+    const int Directions = 16;
+    const float Pi = 6.28318530718;//pi * 2
+    
+    void main()
+    {
+        vec2 radius = size.z/size.xy;
+        vec4 Color = texture2D( gm_BaseTexture, v_vTexcoord);
+        for( float d=0.0;d<Pi;d+=Pi/float(Directions) )
+        {
+            for( float i=1.0/float(Quality);i<=1.0;i+=1.0/float(Quality) )
+            {
+                Color += texture2D( gm_BaseTexture, v_vTexcoord+vec2(cos(d),sin(d))*radius*i);
+            }
+        }
+        Color /= float(Quality)*float(Directions)+1.0;
+        gl_FragColor =  Color *  v_vColour;
+    }
+
+This code sets radius to 0 to 1 sizes to match with the coordinates.
+next it loops through the directions in radians with "d" (0 to "Pi") then loops through the magnitude with "i" (0 to 1). Each loop it gets the color of the texture at that pixel and finally it averages the total after the loops. Next change the "upos" to "usize" and "pos" to "size". Then when setting the uniform set it to 512, 512, and 16 (width, height and radius in pixels).
+The final result should look like this:
+
+Give yourself a pat on the back for completing three useful shaders!
