@@ -22,9 +22,11 @@ We will multiply the textures coordinates by numbers less than 1 to make the tex
     gl_FragColor =  Color *  v_vColour;
 
 This code may look confusing, but what it does is rather simple. It gets the average of the different coordinates and centers them with the "+0.5" part. The shader looks like this:
-Picture
+
 On the left, is the background before the shader, while on the one on the right is after. We will need some knowledge of integers and for statements before we can finish.
-integers
+
+<h3 align="center">Integers</h3>
+
 Integers have the fraction part. It is much like a float, but should always be without the fraction.
 So if we set a float to 0 it would cause an error, but if we set and integer to 0, it would work as long as you don't mix it with floats. The only way to mix the different variable types is to use their functions (int() converts floats to ints and float() does the opposite). Here is an example:
 
@@ -32,14 +34,17 @@ So if we set a float to 0 it would cause an error, but if we set and integer to 
     float j = 0.5+float(i);
 
 That  code would set i to 4 and j to 4.5. These are used in "for statements" which are particularly useful in blur shaders.
-Constants
-Constants are variables that are set once and can't be changed. They are constant and so you want to set them first. They are set outside of "void main()" in the format "const variabletype variable = value". An example could be 
 
+<h3 align="center">Constants</h3>
+
+Constants are variables that are set once and can't be changed. They are constant and so you want to set them first. They are set outside of "void main()" in the format "const variabletype variable = value". An example could be 
 
     const int Number = 48;
 
 That sets the integer "Number" to 48 as an unchanging constant.
-For statement in shaders
+
+<h3 align="center">For statement in shaders</h3>
+
 So to start out this shader you'll need to know how to use a "for statement". The for statement repeats a certain code until specified to stop (they cannot repeat more than 255 times).
 So platforms do not run loops well, so keep that in mind when making games. When you use them, you must start with defining a variable (most often an integer), then you check if the variable is less then the number of times we want it to repeat (for our example) , and lastly we add to our variable. Rather than using commas to separate the parts, we use semi-colons.
 An example would look like this:
@@ -50,7 +55,9 @@ An example would look like this:
     }
 
 Now what that does is it sets variable i to 0 (an integer), then checks if i is less than 16. If it is, it will add one to i (i++) and will repeat until i is equal to or greater than 16.
-Finishing the radial blur
+
+<h3 align="center">Finishing the radial blur</h3>
+
 Now we will use a for statement to blur more than 10 coordinates. We'll start by adding a constant called "Quality" (make sure it's before the "void main()") and set it to 16, then add this code:
 
     vec4 Color;
