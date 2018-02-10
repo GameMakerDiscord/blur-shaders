@@ -6,6 +6,10 @@
 
 &nbsp;
 
+<h1 align="center">Part One</h1>
+
+&nbsp;
+
 Shaders only process one pixel at a time. For bluring, we want the pixel to mix with the surrounding pixels. That is how we would achieve our blur. The easiest way to do this is to use "texture2D()" multiple times with different coordinates. We will make the radial blur first, because it's easier to understand. Radial blur is actually a form of motion blur, but in our case, motion blur will be side to side while radial will give an illusion of depth. 
 Radial blur
 The radial blur effect we are creating will be produced by mixing the texture with different scaled versions of the texture. So the simplest way to do that is to scale the texture coordinates. Doubling the coordinates, makes the texture half the size, while halving it doubles the size. The reason to this is because the texture coordinates are in the 0 to 1 range so halving it would make the range 0 to 0.5 so, the texture is stretched to twice the size. So keep this in mind when scaling multiplying the texture coordinates. We will make our first radial blur have 10 sizes and blur between them.
