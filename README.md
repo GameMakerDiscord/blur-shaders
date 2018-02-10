@@ -1,9 +1,9 @@
 <h1 align="center">Blur Shaders</h1>
 
 <h3 align="center">Written by @XorDev</h3>
+<h3 align="center">A two-part tutorial</h3>
 <h3 align="center">http://xorshaders.weebly.com/tutorials/blur-shaders-5-part-1</h3>
 <h3 align="center">http://xorshaders.weebly.com/tutorials/blur-shaders-5-part-2</h3>
-<h3 align="center">A two-part tutorial</h3>
 
 &nbsp;
 
