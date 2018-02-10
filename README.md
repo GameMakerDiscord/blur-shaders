@@ -37,6 +37,8 @@ So if we set a float to 0 it would cause an error, but if we set and integer to 
 
 That  code would set i to 4 and j to 4.5. These are used in "for statements" which are particularly useful in blur shaders.
 
+&nbsp;
+
 <h3 align="center">Constants</h3>
 
 Constants are variables that are set once and can't be changed. They are constant and so you want to set them first. They are set outside of "void main()" in the format "const variabletype variable = value". An example could be 
