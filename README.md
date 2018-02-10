@@ -141,6 +141,8 @@ We can use this code for the position:
 
 This code is just like the last one except with the position uniform is instead of 0.5. Now in order to run this code, we must add the uniforms in GameMaker.
 
+&nbsp;
+
 <h3 align="center">Uniforms in Gamemaker</h3>
 
 To set these variables in GameMaker, you must get the uniform id.
@@ -160,6 +162,8 @@ The whole code should look similar to this:
 What that code does, is it applies the shader, sets the uniform pos in the shader to the mouse coordinates (the coordinates are shrunk to a 0 to 1 range), then draws the sprite with the shader applied. When we run the game we get this result:
 
 This is the result when the mouse is at the bottom center. Moving the mouse works perfectly.
+
+&nbsp;
 
 <h3 align="center">Motion Blur</h3>
 
@@ -186,6 +190,8 @@ Now what this does is it loops through a number times equal to quality setting "
 
 And there you have a working motion blur shader! It takes in position between 0 and 1.
 And finally lets make the most used blur shader. Lets make a gaussian blur shader.
+
+&nbsp;
 
 <h3 align="center">Gaussian Blur</h3>
 
