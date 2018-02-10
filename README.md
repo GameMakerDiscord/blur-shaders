@@ -25,6 +25,8 @@ This code may look confusing, but what it does is rather simple. It gets the ave
 
 On the left, is the background before the shader, while on the one on the right is after. We will need some knowledge of integers and for statements before we can finish.
 
+&nbsp;
+
 <h3 align="center">Integers</h3>
 
 Integers have the fraction part. It is much like a float, but should always be without the fraction.
@@ -43,6 +45,8 @@ Constants are variables that are set once and can't be changed. They are constan
 
 That sets the integer "Number" to 48 as an unchanging constant.
 
+&nbsp;
+
 <h3 align="center">For statement in shaders</h3>
 
 So to start out this shader you'll need to know how to use a "for statement". The for statement repeats a certain code until specified to stop (they cannot repeat more than 255 times).
@@ -55,6 +59,8 @@ An example would look like this:
     }
 
 Now what that does is it sets variable i to 0 (an integer), then checks if i is less than 16. If it is, it will add one to i (i++) and will repeat until i is equal to or greater than 16.
+
+&nbsp;
 
 <h3 align="center">Finishing the radial blur</h3>
 
