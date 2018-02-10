@@ -140,7 +140,9 @@ We can use this code for the position:
     }
 
 This code is just like the last one except with the position uniform is instead of 0.5. Now in order to run this code, we must add the uniforms in GameMaker.
-Uniforms in Gamemaker
+
+<h3 align="center">Uniforms in Gamemaker</h3>
+
 To set these variables in GameMaker, you must get the uniform id.
 In the Create event of the control object, put this code:
 
@@ -156,9 +158,11 @@ The whole code should look similar to this:
     shader_reset()
 
 What that code does, is it applies the shader, sets the uniform pos in the shader to the mouse coordinates (the coordinates are shrunk to a 0 to 1 range), then draws the sprite with the shader applied. When we run the game we get this result:
-Picture
+
 This is the result when the mouse is at the bottom center. Moving the mouse works perfectly.
-motion blur
+
+<h3 align="center">Motion Blur</h3>
+
 Next we'll make a motion blur. We will use a loop to get 16 pixels in line and average then to get the blur. Doing this in code is rather simple with the knowledge you have gained so far.
 Here is my code:
 
@@ -179,10 +183,12 @@ Here is my code:
     }
 
 Now what this does is it loops through a number times equal to quality setting "i" from 0 to 1 then it gets the position in a line based off of "pos". Here is a screenshot of the result: 
-Picture
+
 And there you have a working motion blur shader! It takes in position between 0 and 1.
 And finally lets make the most used blur shader. Lets make a gaussian blur shader.
-GAUSSIAN blur
+
+<h3 align="center">Gaussian Blur</h3>
+
 This is done just like the motion blur shader, but in all directions. Since you can put a for statement inside another for statement we will be one loop to loop through all the directions and the other will loop through magnitudes. That means we'll need another Quality constant. We will call that one Directions. We'll also add a constant float called "Pi" and set it to "6.28318530718" (pi times 2) and change "pos" to "size" and make it a 3D vector (vec3). We'll use "size" for the width, height and radius where width and height are the textures height and width. Now add another loop with a float called "d" and it's range will be from 0.0 to "Pi". Here's how the code should look:
 
     varying vec2 v_vTexcoord;
